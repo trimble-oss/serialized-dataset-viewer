@@ -1,0 +1,51 @@
+# Run workflow to create a release+tag based on version of app set in GlobalAssemblyInfo.cs
+name: Tag and Create Release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [csharp]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build
+        run: dotnet build
+
+      - name: Get Version
+        id: GetVersion 
+        shell: powershell
+        run: | 
+          $path = [System.IO.Path]::Combine((Get-Location),"bin\Debug\net6.0-windows\SerializedDataSetViewer.dll")
+          $version = [System.Reflection.Assembly]::LoadFrom($path).GetName().Version
+          $version.ToString(3)
+          Write-Output "BUILD_NUMBER=$($version.ToString(3))" >> $env:GITHUB_OUTPUT
+      - name: Zip
+        shell: powershell
+        run: | 
+          $zipPath = "SerializedDataSetViewer_${{steps.GetVersion.outputs.BUILD_NUMBER}}.zip"
+          Compress-Archive -Path "bin\Debug\net6.0-windows\*" -DestinationPath $zipPath
+     
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "SerializedDataSetViewer*.zip"
+          tag_name: ${{steps.GetVersion.outputs.BUILD_NUMBER}}
+          generate_release_notes: true
+          draft: true
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
