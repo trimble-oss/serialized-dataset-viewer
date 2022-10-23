@@ -11,6 +11,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json.Bson;
+using Microsoft.Extensions.Configuration;
 
 namespace SerializedDataSetViewer
 {
@@ -23,7 +24,7 @@ namespace SerializedDataSetViewer
 
         private void BttnOpen_Click(object sender, EventArgs e)
         {
-            using var fbd = new FolderBrowserDialog() { AutoUpgradeEnabled = false };
+            using var fbd = new FolderBrowserDialog() { AutoUpgradeEnabled = false, SelectedPath=txtFolder.Text  };
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 txtFolder.Text = fbd.SelectedPath;
@@ -113,6 +114,15 @@ namespace SerializedDataSetViewer
         private void TxtFolder_TextChanged(object sender, EventArgs e)
         {
             LoadFiles();
+        }
+
+        private void SerializedDataSetViewer_Load(object sender, EventArgs e)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
+
+            txtFolder.Text = config.GetValue<string>("DefaultPath");
         }
     }
 }
