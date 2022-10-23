@@ -21,19 +21,17 @@ namespace SerializedDataSetViewer
             InitializeComponent();
         }
 
-        private void bttnOpen_Click(object sender, EventArgs e)
+        private void BttnOpen_Click(object sender, EventArgs e)
         {
-            using(var fbd = new FolderBrowserDialog() {  AutoUpgradeEnabled=false })
+            using var fbd = new FolderBrowserDialog() { AutoUpgradeEnabled = false };
+            if (fbd.ShowDialog() == DialogResult.OK)
             {
-                if(fbd.ShowDialog() == DialogResult.OK)
-                {
-                    txtFolder.Text = fbd.SelectedPath;
-                }
+                txtFolder.Text = fbd.SelectedPath;
             }
         }
    
 
-        private void loadFiles()
+        private void LoadFiles()
         {
             string folder = txtFolder.Text;
             lbFiles.Items.Clear();
@@ -93,7 +91,7 @@ namespace SerializedDataSetViewer
             }
         }
 
-        private void lbFiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             string filePath =Path.Combine(txtFolder.Text,(string)lbFiles.SelectedItem);
             if (File.Exists(filePath))
@@ -112,9 +110,9 @@ namespace SerializedDataSetViewer
             }
         }
 
-        private void txtFolder_TextChanged(object sender, EventArgs e)
+        private void TxtFolder_TextChanged(object sender, EventArgs e)
         {
-            loadFiles();
+            LoadFiles();
         }
     }
 }

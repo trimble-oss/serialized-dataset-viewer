@@ -51,7 +51,7 @@
             this.bttnOpen.Size = new System.Drawing.Size(94, 29);
             this.bttnOpen.TabIndex = 0;
             this.bttnOpen.UseVisualStyleBackColor = true;
-            this.bttnOpen.Click += new System.EventHandler(this.bttnOpen_Click);
+            this.bttnOpen.Click += new System.EventHandler(this.BttnOpen_Click);
             // 
             // txtFolder
             // 
@@ -59,7 +59,7 @@
             this.txtFolder.Name = "txtFolder";
             this.txtFolder.Size = new System.Drawing.Size(393, 27);
             this.txtFolder.TabIndex = 1;
-            this.txtFolder.TextChanged += new System.EventHandler(this.txtFolder_TextChanged);
+            this.txtFolder.TextChanged += new System.EventHandler(this.TxtFolder_TextChanged);
             // 
             // lbFiles
             // 
@@ -70,7 +70,7 @@
             this.lbFiles.Name = "lbFiles";
             this.lbFiles.Size = new System.Drawing.Size(300, 925);
             this.lbFiles.TabIndex = 2;
-            this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
+            this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.LbFiles_SelectedIndexChanged);
             // 
             // panel1
             // 
