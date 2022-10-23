@@ -121,7 +121,7 @@ namespace SerializedDataSetViewer
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json").Build();
-
+            this.Text = "Serialized DataSet Viewer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             txtFolder.Text = config.GetValue<string>("DefaultPath");
         }
     }
