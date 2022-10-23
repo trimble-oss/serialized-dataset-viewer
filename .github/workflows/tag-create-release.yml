@@ -37,7 +37,7 @@ jobs:
         shell: powershell
         run: | 
           $zipPath = "SerializedDataSetViewer_${{steps.GetVersion.outputs.BUILD_NUMBER}}.zip"
-          Compress-Archive -Path "bin\Debug\net6.0-windows\*" -DestinationPath $zipPath
+          Compress-Archive -Path "SerializedDataSetViewer\bin\Debug\net6.0-windows\*" -DestinationPath $zipPath
      
       - name: Publish
         uses: softprops/action-gh-release@v1
