@@ -29,7 +29,7 @@ jobs:
         id: GetVersion 
         shell: powershell
         run: | 
-          $path = [System.IO.Path]::Combine((Get-Location),"bin\Debug\net6.0-windows\SerializedDataSetViewer.dll")
+          $path = [System.IO.Path]::Combine((Get-Location),"SerializedDataSetViewer\bin\Debug\net6.0-windows\SerializedDataSetViewer.dll")
           $version = [System.Reflection.Assembly]::LoadFrom($path).GetName().Version
           $version.ToString(3)
           Write-Output "BUILD_NUMBER=$($version.ToString(3))" >> $env:GITHUB_OUTPUT
