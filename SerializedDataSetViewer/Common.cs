@@ -46,7 +46,7 @@ namespace SerializedDataSetViewer
 
             Clipboard.SetDataObject(obj, true);
         }
-        public static void CopyDataGridViewToClipboard(DataGridView dgv, string headerBGcolor = "#696969", string headerColor = "#FFFFFF")
+        public static void CopyDataGridViewToClipboard(DataGridView dgv, string headerBGcolor = "#004f83", string headerColor = "#FFFFFF")
         {
 
             var DataGridView1Counts = dgv.Rows.Count;
