@@ -20,16 +20,16 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Build
-        run: dotnet build
+        run: dotnet build -o Build
 
       - name: Get Version
         id: GetVersion 
         shell: powershell
         run: | 
-          $path = [System.IO.Path]::Combine((Get-Location),"SerializedDataSetViewer\bin\Debug\net6.0-windows\SerializedDataSetViewer.dll")
+          $path = [System.IO.Path]::Combine((Get-Location),"Build\SerializedDataSetViewer.dll")
           $version = [System.Reflection.Assembly]::LoadFrom($path).GetName().Version
           $version.ToString(3)
           Write-Output "BUILD_NUMBER=$($version.ToString(3))" >> $env:GITHUB_OUTPUT
@@ -37,7 +37,7 @@ jobs:
         shell: powershell
         run: | 
           $zipPath = "SerializedDataSetViewer_${{steps.GetVersion.outputs.BUILD_NUMBER}}.zip"
-          Compress-Archive -Path "SerializedDataSetViewer\bin\Debug\net6.0-windows\*" -DestinationPath $zipPath
+          Compress-Archive -Path "Build\*" -DestinationPath $zipPath
      
       - name: Publish
         uses: softprops/action-gh-release@v1
