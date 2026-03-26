@@ -19,6 +19,7 @@ namespace SerializedDataSetViewerControls
 
         private DataSet ds;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public DataSet DataSet
         {
             get
@@ -28,7 +29,7 @@ namespace SerializedDataSetViewerControls
             set
             {
                 ds = value;
-                if (ds == null || ds.Tables.Count==0)
+                if (ds == null || ds.Tables.Count == 0)
                 {
                     tsTable.Text = "No tables to select";
                 }
@@ -36,10 +37,10 @@ namespace SerializedDataSetViewerControls
             }
         }
 
-        private static string GetDTText(DataTable dt) {
+        private static string GetDTText(DataTable dt)
+        {
             return dt.TableName + " { " + dt.Rows.Count.ToString() + "}";
         }
-
 
         private void populateTables()
         {
@@ -49,7 +50,7 @@ namespace SerializedDataSetViewerControls
                 var sortedTables = ds.Tables.Cast<DataTable>().OrderBy(item => item.TableName).ToList();
                 foreach (DataTable dt in sortedTables)
                 {
-                    var ddTable = new ToolStripMenuItem(GetDTText(dt)) { Tag = dt.TableName } ;
+                    var ddTable = new ToolStripMenuItem(GetDTText(dt)) { Tag = dt.TableName };
                     tsTable.DropDownItems.Add(ddTable);
                     ddTable.Click += DdTable_Click;
                 }
