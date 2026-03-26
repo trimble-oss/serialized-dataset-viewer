@@ -17,6 +17,7 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
+  workflow_dispatch: {}
   schedule:
     - cron: '41 8 * * 1'
 
@@ -53,10 +54,11 @@ jobs:
         # queries: security-extended,security-and-quality
 
         
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v4
+    # Build the repository explicitly instead of using the CodeQL autobuild
+    # to avoid warnings about build-mode being undefined. Adjust the
+    # solution name or configuration if your project uses different values.
+    - name: Build solution
+      run: dotnet build SerializedDataSetViewer.sln --configuration Release
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
